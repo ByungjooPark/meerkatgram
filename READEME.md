@@ -37,7 +37,7 @@ meerkatgram/
 │   │   ├── routes/             # API 엔드포인트 정의
 │   │   ├── services/           # 비즈니스 로직 레이어
 │   │   └── utils/              # 유틸
-│   ├── configs/                # 설정 파일 (DB, JWT, OAuth, Push 등)
+│   ├── configs/                # 전역 설정 파일 (DB, JWT, OAuth, Push 등)
 │   ├── database/           # 데이터베이스 관련
 │   │   ├── migrations/         # 마이그레이션 (DB 스키마 작성 파일 등)
 │   │   └── seeders/            # 시더 (DB 더미 데이터 생성 파일 등)
@@ -59,7 +59,7 @@ npm install -D
 ### server
 ````
 npm init
-npm i express express-validator morgan winston dotenv sequelize sequelize-cli mysql2 cookie-parser jsonwebtoken cors multer swagger-ui-express yaml dayjs
+npm i express express-validator morgan winston dotenv sequelize sequelize-cli mysql2 cookie-parser jsonwebtoken cors multer swagger-ui-express yaml dayjs bcrypt
 npm install -D nodemon
 ````
 
@@ -223,3 +223,14 @@ E21: 파라미터 에러
 E80: DB 에러
 E99: 시스템 에러
 ````
+
+# 명명 규칙
+| 구분                     | 예시                                                        | 권장 표기법               | 이유                                                         |
+| ---------------------- | --------------------------------------------------------- | -------------------- | ---------------------------------------------------------- |
+| **변수명 / 함수명**          | `userName`, `getUserInfo()`                               | **camelCase**        | JS 공식 컨벤션 (ECMAScript 가이드라인)                               |
+| **클래스명 / React 컴포넌트명** | `UserController`, `PostList`                              | **PascalCase**       | 생성자/컴포넌트 식별을 명확히 하기 위함                                     |
+| **상수 (변하지 않는 값)**      | `MAX_LIMIT`, `JWT_SECRET`                                 | **UPPER_SNAKE_CASE** | 상수임을 직관적으로 표시                                              |
+| **파일명 (JS/TS)**        | `userController.js`, `role.enum.js`, `auth.middleware.js` | **kebab-case**       | 파일명은 OS에 따라 대소문자 구분 문제를 피하기 위함 (Linux, macOS, Windows 호환성) |
+| **폴더명**                | `controllers/`, `middlewares/`, `services/`               | **kebab-case**       | URL, import 경로와 일관성 유지                                     |
+| **URL 경로 / API 엔드포인트** | `/api/user-info`, `/api/posts/:id`                        | **kebab-case**       | SEO 친화적이며, RESTful API 표준 스타일                              |
+| **DB 컬럼명**             | `user_name`, `created_at`                                 | **snake_case**       | SQL 관행 (대소문자 구분 없음, 읽기 쉬움)                                 |

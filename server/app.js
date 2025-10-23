@@ -13,6 +13,9 @@ import morganConfig from './configs/morganConfig.js';
 import errorHandler from './app/errors/errorHandler.js';
 import authRouter from './routes/authRouter.js';
 import { NOT_FOUND_ERROR } from './configs/responseCodeConfig.js';
+import { authMiddleware } from './app/middlewares/auth/authMiddleware.js';
+import userRouter from './routes/userRouter.js';
+import postRouter from './routes/postRouter.js';
 
 const __filename = fileURLToPath(import.meta.url); // 현재 실행중인 파일 경로
 const __dirname = dirname(__filename); // 해당 경로에서 디렉토리 경로만 획득
@@ -30,8 +33,16 @@ app.use('/', express.static(buildPath)); // 퍼블릭 정적파일 제공 활성
 app.use('/images/profiles', express.static(userProfilesPath)); // 유저 프로필 이미지 제공 활성화
 app.use('/images/posts', express.static(postsImagePath)); // 게시글 이미지 제공 활성화
 
+// ------- 관리자 기능 -------
+
+// ------- 유저 기능 -------
+// 인증 및 인가 미들웨어 등록
+app.use(authMiddleware.verifyAuth);
+
 // 라우터 정의
 app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
+app.use('/api/posts', postRouter);
 
 // 없는 API는 404 반환
 app.all(/^\/api\/.*/, (request, response) => {

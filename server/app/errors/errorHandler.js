@@ -17,13 +17,21 @@ export default (err, req, res, next) => {
   if(err instanceof BaseError) {
     err.codeInfo = DB_ERROR;
   }
-  
+
   // 커스텀 에러가 아닌 경우, 시스템 에러로 설정
   if(!err.codeInfo) {
     err.codeInfo = SYSTEM_ERROR;
   }
   
-  logger.error(`${err.name}: ${err.message}\n${err.stack}`);
+  // 시스템 에러와 DB 에러 시에만 로그 출력
+  if(err.codeInfo.code === SYSTEM_ERROR.code || err.codeInfo.code === DB_ERROR.code) {
+    logger.error(`${err.name}: ${err.message}\n${err.stack}`);
+  }
+
+  // 디버그 모드에서만 콘솔로 로그 출력
+  if(process.env.APP_DEBUG_MODE === 'debug') {
+    console.log(err.stack);
+  }
 
   res.status(err.codeInfo.status).send(err.codeInfo);
 }

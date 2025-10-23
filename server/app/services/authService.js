@@ -4,6 +4,46 @@
  * 251019 v1.0 meerkat
  */
 
-export const authService = {
+import bcrypt from 'bcrypt';
+import { NOT_REGISTERED_ERROR } from "../../configs/responseCodeConfig.js";
+import { userRepository } from "../repositories/userRepositories.js"
+import { myError } from '../errors/custom/myError.js';
+import { jwtUtil } from '../utils/jwtUtils.js';
+import db from '../models/index.js';
+
+async function login(body) {
+  return await db.sequelize.transaction(async t => {
+    const {email, password} = body;
   
+    // 유저정보 획득
+    const user = await userRepository.findWithEmail(t, email);
+  
+    // 미가입 체크
+    if(!user) {
+      throw myError('미가입 회원', NOT_REGISTERED_ERROR);
+    }
+  
+    // 비밀번호 체크
+    if(!bcrypt.compareSync(password, user.password)){
+      throw myError('비밀번호 틀림', NOT_REGISTERED_ERROR)
+    }
+  
+    // JWT 생성
+    const accessToken = jwtUtil.generateAccessToken(user);
+    const refreshToken = jwtUtil.generateRefreshToken(user);
+  
+    // RefreshToken 저장
+    user.refreshToken = refreshToken;
+    await userRepository.update(t, user);
+
+    return {
+      accessToken,
+      refreshToken,
+      user
+    };
+  });
+}
+
+export const authService = {
+  login,
 }

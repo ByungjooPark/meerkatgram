@@ -13,7 +13,7 @@
 export function createBaseResponse(codeInfo, data = null) {
   const response = {
     code: codeInfo.code,
-    message: codeInfo.msg
+    message: codeInfo.info
   };
 
   if(data) {

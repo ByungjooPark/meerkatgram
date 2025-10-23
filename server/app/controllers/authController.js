@@ -5,25 +5,35 @@
  */
 
 import { SUCCESS } from "../../configs/responseCodeConfig.js";
+import { authService } from "../services/authService.js";
+import { cookieUtils } from "../utils/cookieUtils.js";
 import { createBaseResponse } from "../utils/createBaseResponse.js";
 
-
-
 export const authController = {
-  /**
-   * 로그인 처리
-   * @param {Request} request 
-   * @param {Response} response 
-   * @param {import("express").NextFunction} next 
-   */
-  login: async (request, response, next) => {
-    try {
+  login,
+}
 
-      return response
-        .status(SUCCESS.status)
-        .send(createBaseResponse(SUCCESS, request.body));
-    } catch(e) {
-      next(e);
-    }
-  },
+// ---------------------
+// ------ public -------
+// ---------------------
+/**
+ * 로그인 처리
+ * @param {Request} request 
+ * @param {Response} response 
+ * @param {import("express").NextFunction} next 
+ */
+async function login(request, response, next) {
+  try {
+    // 로그인 처리
+    const { accessToken, refreshToken, user } = await authService.login(request.body);
+
+    // 쿠키에 리프래시토큰 설정
+    cookieUtils.setCookieRefreshToken(response, refreshToken);
+
+    return response
+      .status(SUCCESS.status)
+      .send(createBaseResponse(SUCCESS, {accessToken, user}));
+  } catch(e) {
+    next(e);
+  }
 }

@@ -5,9 +5,11 @@
  */
 
 import Role from "./roleEnum.js"
-
 const {FREE, PRO} = Role;
 
+/**
+ * 인증 및 인가가 필요한 path만 정의
+ */
 export const rolePermissions = {
   GET: [
     { path: /^\/api\/posts$/, roles: [FREE, PRO] },

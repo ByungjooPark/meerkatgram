@@ -13,6 +13,6 @@ import { authController } from '../app/controllers/authController.js';
 const authRouter = express.Router();
 
 authRouter.post('/login', loginValidator, validationHandler, authController.login);
-// authRouter.post('/reissue', authController.reissueAccessToken);
+authRouter.post('/reissue', authController.reissue);
 
 export default authRouter;

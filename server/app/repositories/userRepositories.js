@@ -16,7 +16,7 @@ async function store(t = null, data) {
   );
 }
 
-async function findWithEmail(t = null, email) {
+async function findByEmail(t = null, email) {
   return await User.findOne(
     { 
       where: { email: email }
@@ -30,8 +30,13 @@ async function update(t = null, user) {
   return await user.save({transaction: t});
 }
 
+async function findByPk(t = null, id) {
+  return await User.findByPk(id, { transaction: t });
+}
+
 export const userRepository = {
   store,
-  findWithEmail,
+  findByEmail,
   update,
+  findByPk,
 }

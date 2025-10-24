@@ -11,6 +11,7 @@ import { createBaseResponse } from "../utils/createBaseResponse.js";
 
 export const authController = {
   login,
+  reissue,
 }
 
 // ---------------------
@@ -26,6 +27,28 @@ async function login(request, response, next) {
   try {
     // 로그인 처리
     const { accessToken, refreshToken, user } = await authService.login(request.body);
+
+    // 쿠키에 리프래시토큰 설정
+    cookieUtils.setCookieRefreshToken(response, refreshToken);
+
+    return response
+      .status(SUCCESS.status)
+      .send(createBaseResponse(SUCCESS, {accessToken, user}));
+  } catch(e) {
+    next(e);
+  }
+}
+
+/**
+ * 로그인 처리
+ * @param {Request} request 
+ * @param {Response} response 
+ * @param {import("express").NextFunction} next 
+ */
+async function reissue(request, response, next) {
+  try {
+    // 리프래시 토큰 획득
+    const { accessToken, refreshToken, user } = await authService.reissue(cookieUtils.getCookieRefreshToken(request));
 
     // 쿠키에 리프래시토큰 설정
     cookieUtils.setCookieRefreshToken(response, refreshToken);

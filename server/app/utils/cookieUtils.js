@@ -36,7 +36,7 @@ function setCookieRefreshToken(response, refreshToken) {
  * @returns 
  */
 function getCookieRefreshToken(request) {
-  return getCookie(request, parseInt(process.env.JWT_REFRESH_TOKEN_COOKIE_NAME));
+  return getCookie(request, process.env.JWT_REFRESH_TOKEN_COOKIE_NAME);
 }
 
 // ---------------------

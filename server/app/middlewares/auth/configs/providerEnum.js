@@ -5,9 +5,9 @@
  */
 
 const Provider = {
-  KAKAO: 'kakao',
-  NONE: 'none',
-  GOOGLE: 'google',
+  KAKAO: 'KAKAO',
+  NONE: 'NONE',
+  GOOGLE: 'GOOGLE',
 }
 
 Object.freeze(Provider);

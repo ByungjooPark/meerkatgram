@@ -15,7 +15,7 @@ import Role from '../middlewares/auth/configs/roleEnum.js';
 async function registration(body) {
   await db.sequelize.transaction(async t => {
     // 중복 가입 체크
-    const resultUser = await userRepository.findWithEmail(t, body.email);
+    const resultUser = await userRepository.findByEmail(t, body.email);
     
     if(resultUser) {
       throw myError('중복 가입 체크', CONFLICT_ERROR);

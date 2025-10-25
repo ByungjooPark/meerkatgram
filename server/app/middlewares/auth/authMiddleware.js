@@ -7,7 +7,7 @@
 import { FORBIDDEN_ERROR, INVALID_TOKEN_ERROR } from "../../../configs/responseCodeConfig.js";
 import { myError } from "../../errors/custom/myError.js";
 import { jwtUtil } from "../../utils/jwtUtils.js";
-import { rolePermissions } from "./configs/rolePermissions.js";
+import rolePermissions from "./configs/rolePermissions.js";
 
 function authenticate(request) {
   // 토큰 획득

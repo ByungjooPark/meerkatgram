@@ -5,9 +5,9 @@
  */
 
 const Role = {
-  ADMIN: 'admin',
-  FREE: 'free',
-  PRO: 'pro',
+  ADMIN: 'ADMIN',
+  FREE: 'FREE',
+  PRO: 'PRO',
 }
 
 Object.freeze(Role);

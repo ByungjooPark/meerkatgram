@@ -11,6 +11,6 @@ import validationHandler from '../app/middlewares/validations/validationHandler.
 
 const userRouter = express.Router();
 
-userRouter.post('/store', registrationValidator, validationHandler, userConstroller.store);
+userRouter.post('/', registrationValidator, validationHandler, userConstroller.store);
 
 export default userRouter;

@@ -106,7 +106,7 @@ const NOT_FOUND_ERROR = {
 Object.freeze(NOT_FOUND_ERROR);
 
 /**
- * 전역 응답 코드 설정
+ * 파라미터 에러 코드 설정
  * @type {{[key: string]: ResponseCodeConfig}}
  */
 const BAD_REQUEST_ERROR = {
@@ -116,6 +116,18 @@ const BAD_REQUEST_ERROR = {
   status: 400
 };
 Object.freeze(BAD_REQUEST_ERROR);
+
+/**
+ * BAD_FILE_ERROR 코드 설정
+ * @type {{[key: string]: ResponseCodeConfig}}
+ */
+const BAD_FILE_ERROR = {
+  code: 'E22',
+  msg: 'Bad File Error',
+  info: '파일은 필수(10MB이하)입니다.',
+  status: 400
+};
+Object.freeze(BAD_FILE_ERROR);
 
 /**
  * DB 에러 응답 코드 설정
@@ -153,4 +165,5 @@ export {
   SYSTEM_ERROR,
   UNAUTHORIZED_ERROR,
   EXPIRED_TOKEN_ERROR,
+  BAD_FILE_ERROR,
 };

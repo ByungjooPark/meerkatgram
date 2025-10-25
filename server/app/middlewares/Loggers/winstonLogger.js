@@ -1,11 +1,12 @@
 /**
- * @file configs/WinstonConfig.js
- * @description winston 설정 파일
+ * @file configs/winstonLogger.js
+ * @description winstonLogger 파일
  * 251019 v1.0 meerkat
  */
 
 import dayjs from 'dayjs';
 import winston from 'winston';
+import { pathUtil } from '../../utils/pathUtil.js';
 
 const now = dayjs().locale(process.env.APP_TZ).format('YYYYMMDD');
 
@@ -18,7 +19,7 @@ const logFormat = winston.format.printf(({message, level}) => {
 
 // 범용 로거 인스턴스
 export const logger = winston.createLogger({
-    level: process.env.APP_LOG_ERROR_LEVEL,
+    level: process.env.LOG_ERROR_LEVEL,
     format: winston.format.combine(
         winston.format.timestamp({format: 'YYYY-MM-dd HH:mm:ss'}),
         logFormat // 작성한 커스텀 포맷 사용
@@ -26,21 +27,21 @@ export const logger = winston.createLogger({
     transports: [
         // 로그레벨이 error인 경우
         new winston.transports.File({
-            filename: `${process.env.APP_LOG_ERROR_PATH}/${now}_${process.env.APP_LOG_ERROR_FILE_NAME}`
+            filename: pathUtil.getLogDirPath(`${now}_${process.env.LOG_ERROR_FILE_NAME}`)
         })
     ]
 });
 
 // morgan용 로거 인스턴스
 export const httpLogger = winston.createLogger({
-    level: process.env.APP_LOG_HTTP_LEVEL,
+    level: process.env.LOG_HTTP_LEVEL,
     format: winston.format.combine(
       winston.format.printf(({message}) => message)
     ),
     transports: [
         // 로그 레벨이 http인 경우
         new winston.transports.File({
-            filename: `${process.env.APP_LOG_HTTP_PATH}/${now}_${process.env.APP_LOG_HTTP_FILE_NAME}`
+            filename: pathUtil.getLogDirPath(`${now}_${process.env.LOG_HTTP_FILE_NAME}`)
         })
     ]
 });

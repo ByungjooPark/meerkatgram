@@ -6,7 +6,7 @@
 
 import { BaseError } from "sequelize";
 import { DB_ERROR, SYSTEM_ERROR } from "../../configs/responseCodeConfig.js";
-import { logger } from "../../configs/winstonConfig.js";
+import { logger } from "../middlewares/Loggers/winstonLogger.js";
 
 /**
  * 모든 에러는 `err.codeInfo`프로퍼티를 포함하고 있을 것 (없으면 시스템 에러로 처리)
@@ -29,7 +29,7 @@ export default (err, req, res, next) => {
   }
 
   // 디버그 모드에서만 콘솔로 로그 출력
-  if(process.env.APP_DEBUG_MODE === 'debug') {
+  if(process.env.APP_MODE === 'dev') {
     console.log(err.stack);
   }
 

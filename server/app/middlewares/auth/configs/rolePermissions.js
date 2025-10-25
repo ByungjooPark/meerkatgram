@@ -10,7 +10,7 @@ const {FREE, PRO} = Role;
 /**
  * 인증 및 인가가 필요한 path만 정의
  */
-export const rolePermissions = {
+const rolePermissions = {
   GET: [
     { path: /^\/api\/posts$/, roles: [FREE, PRO] },
     { path: /^\/api\/follows\/following$/, roles: [FREE, PRO] }
@@ -27,3 +27,6 @@ export const rolePermissions = {
       // ...
   ]
 }
+Object.freeze(rolePermissions);
+
+export default rolePermissions;

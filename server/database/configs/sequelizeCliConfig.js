@@ -1,10 +1,10 @@
 /**
- * @file configs/SequelizeCliConfig.js
+ * @file database/configs/SequelizeCliConfig.js
  * @description sequelize-Cli 설정 파일
  * 251019 v1.0 meerkat
  */
 
-import './envConfig.js';
+import '../../configs/envConfig.js';
 
 export default {
   "development": {

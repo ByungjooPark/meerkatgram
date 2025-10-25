@@ -6,32 +6,30 @@
 
 import express from 'express'; // express 모듈을 가져오기
 import cookieParser from 'cookie-parser';
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
 import './configs/envConfig.js';
-import morganConfig from './configs/morganConfig.js';
 import errorHandler from './app/errors/errorHandler.js';
 import authRouter from './routes/authRouter.js';
 import { NOT_FOUND_ERROR } from './configs/responseCodeConfig.js';
 import { authMiddleware } from './app/middlewares/auth/authMiddleware.js';
 import userRouter from './routes/userRouter.js';
 import postRouter from './routes/postRouter.js';
+import fileRouter from './routes/fileRouter.js';
+import morganLogger from './app/middlewares/Loggers/morganLogger.js';
+import { pathUtil } from './app/utils/pathUtil.js';
 
-const __filename = fileURLToPath(import.meta.url); // 현재 실행중인 파일 경로
-const __dirname = dirname(__filename); // 해당 경로에서 디렉토리 경로만 획득
-const buildPath = join(__dirname, process.env.STORAGE_DIST_PATH);
-const userProfilesPath = join(__dirname, process.env.STORAGE_USER_PROFILE_PATH);
-const postsImagePath = join(__dirname, process.env.STORAGE_POST_IMAGE_PATH);
+const buildPath = pathUtil.getAppDirPath(process.env.STORAGE_DIST_PATH);
+const userProfilesPath = pathUtil.getStorageProfileDirPath(process.env.STORAGE_USER_PROFILE_PATH);
+const postsImagePath = pathUtil.getStoragePostDirPath(process.env.STORAGE_POST_IMAGE_PATH);
 
 const app = express(); // Express 애플리케이션 인스턴스를 생성
 app.use(express.json()); // JSON 요청 파싱 처리
 app.use(cookieParser()); // Cookie파서 등록
-app.use(morganConfig);
+app.use(morganLogger);
 
 // 정적 파일 제공 등록
 app.use('/', express.static(buildPath)); // 퍼블릭 정적파일 제공 활성화
-app.use('/images/profiles', express.static(userProfilesPath)); // 유저 프로필 이미지 제공 활성화
-app.use('/images/posts', express.static(postsImagePath)); // 게시글 이미지 제공 활성화
+app.use(process.env.STORAGE_USER_PROFILE_PATH, express.static(userProfilesPath)); // 유저 프로필 이미지 제공 활성화
+app.use(process.env.STORAGE_POST_IMAGE_PATH, express.static(postsImagePath)); // 게시글 이미지 제공 활성화
 
 // ------- 관리자 기능 -------
 
@@ -43,6 +41,7 @@ app.use(authMiddleware.verifyAuth);
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
+app.use('/api/file', fileRouter);
 
 // 없는 API는 404 반환
 app.all(/^\/api\/.*/, (request, response) => {

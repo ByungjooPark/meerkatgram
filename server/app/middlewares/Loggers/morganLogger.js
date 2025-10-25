@@ -1,12 +1,12 @@
 /**
- * @file configs/MorganConfig.js
- * @description morgan 설정 파일
+ * @file configs/MorganLogger.js
+ * @description morganLogger 파일
  * 251011 v1.0 meerkat
  */
 
 import dayjs from 'dayjs';
 import morgan from 'morgan';
-import { httpLogger } from './winstonConfig.js';
+import { httpLogger } from './winstonLogger.js';
 
 morgan.token('ko-timezone', () => {
     return dayjs().locale(process.env.APP_TZ).format('YYYY-MM-DD HH:mm:ss')

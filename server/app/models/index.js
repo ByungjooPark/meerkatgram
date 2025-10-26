@@ -1,6 +1,8 @@
 import '../../configs/envConfig.js';
 import { Sequelize } from 'sequelize';
 import User from './User.js';
+import Post from './Post.js';
+import Comment from './Comment.js';
 
 const db = {}; // 생성할 db 인스턴스 저장용
 
@@ -31,8 +33,12 @@ db.sequelize = sequelize; // 생성한 sequelize 인스턴스 db에 저장
 
 // 모델 초기화
 db.User = User.init(sequelize);
+db.Post = Post.init(sequelize);
+db.Comment = Comment.init(sequelize);
 
 // 모델 관계 설정
-// Station.associate(db);
+User.associate(db);
+Post.associate(db);
+Comment.associate(db);
 
 export default db;

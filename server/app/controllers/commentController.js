@@ -1,14 +1,14 @@
 /**
- * @file app/controllers/userController.js
- * @description user 컨트롤러
+ * @file app/controllers/commentController.js
+ * @description commentController
  * 251019 v1.0 meerkat
  */
 
 import { SUCCESS } from "../../configs/responseCodeConfig.js";
-import { postService } from "../services/postService.js";
+import { commentService } from "../services/commentService.js";
 import { createBaseResponse } from "../utils/createBaseResponse.js";
 
-export const postController = {
+export const commentController = {
   index,
   show,
   store,
@@ -43,9 +43,7 @@ async function index(request, response, next) {
  */
 async function show(request, response, next) {
   try {
-    const result = await postService.show(request.params.id);
-    
-    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
+    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'delete.show'));
   } catch(e) {
     next(e);
   }
@@ -63,12 +61,12 @@ async function store(request, response, next) {
   try {
     const data = {
       userId: request.user.userId,
-      title: request.body.title.trim(),
+      postId: request.body.postId,
       content: request.body.content.trim(),
-      image: request.body.image.trim(),
+      commentId: request.body.commentId ? parseInt(request.body.commentId.trim()) : 0,
     }
 
-    const result = await postService.createPost(data);
+    const result = await commentService.store(data);
     
     return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
   } catch(e) {
@@ -87,7 +85,7 @@ async function store(request, response, next) {
 async function destroy(request, response, next) {
   try {
     
-    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'post.destroy'));
+    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'delete.destroy'));
   } catch(e) {
     next(e);
   }
@@ -103,17 +101,8 @@ async function destroy(request, response, next) {
  */
 async function update(request, response, next) {
   try {
-    const data = {
-      userId: request.user.userId,
-      id: parseInt(request.params.id.trim()),
-      title: request.body.title.trim(),
-      content: request.body.content.trim(),
-      image: request.body.image.trim(),
-    }
-
-    const result = await postService.update(data);
     
-    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
+    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'post.update'));
   } catch(e) {
     next(e);
   }

@@ -13,18 +13,22 @@ const {FREE, PRO} = Role;
 const rolePermissions = {
   GET: [
     { path: /^\/api\/posts$/, roles: [FREE, PRO] },
-    { path: /^\/api\/follows\/following$/, roles: [FREE, PRO] }
+    { path: /^\/api\/posts\/[0-9]+$/, roles: [FREE, PRO] },
+    { path: /^\/api\/follows\/following$/, roles: [FREE, PRO] },
+    { path: /^\/api\/comments$/, roles: [FREE, PRO] },
   ],
   POST: [
     { path: /^\/api\/files\/images$/, roles: [FREE, PRO] },
     { path: /^\/api\/posts$/, roles: [FREE, PRO] },
-    { path: /^\/api\/posts\/d+$/, roles: [FREE, PRO] }
+    { path: /^\/api\/comments$/, roles: [FREE, PRO] },
   ],
   PUT: [
-      // ...
+    { path: /^\/api\/posts\/[0-9]+$/, roles: [FREE, PRO] },
+    { path: /^\/api\/comments$/, roles: [FREE, PRO] },
   ],
   DELETE: [
-      // ...
+    { path: /^\/api\/posts\/[0-9]+$/, roles: [FREE, PRO] },
+    { path: /^\/api\/comments\/[0-9]+$/, roles: [FREE, PRO] },
   ]
 }
 Object.freeze(rolePermissions);

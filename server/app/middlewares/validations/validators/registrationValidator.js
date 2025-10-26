@@ -4,6 +4,6 @@
  * 251019 v1.0 meerkat
  */
 
-import { email, nick, password, role } from "./fields/userField.js";
+import { email, nick, password, role, profile } from "../fields/userField.js";
 
-export default [email, password, nick, role];
+export default [email, password, nick, role, profile];

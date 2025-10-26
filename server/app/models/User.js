@@ -122,9 +122,10 @@ const User = {
     return defineUser;
   },
   // 모델 관계 정의
-  // associate: (db) => {
-
-  // }
+  associate: (db) => {
+    db.User.hasMany(db.Post, { sourceKey: 'id', foreignKey: 'userId' });
+    db.User.hasMany(db.Comment, { sourceKey: 'id', foreignKey: 'userId' });
+  }
 }
 
 export default User;

@@ -4,5 +4,5 @@
  * 251019 v1.0 meerkat
  */
 
-import { email, password } from './fields/userField.js';
+import { email, password } from '../fields/userField.js';
 export default [email, password];

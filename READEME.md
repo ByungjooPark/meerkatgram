@@ -41,7 +41,7 @@ meerkatgram/
 │   ├── database/           # 데이터베이스 관련
 │   │   ├── migrations/         # 마이그레이션 (DB 스키마 작성 파일 등)
 │   │   └── seeders/            # 시더 (DB 더미 데이터 생성 파일 등)
-│   ├── storage/            # 정적 파일을 서빙 디렉토리 (업로드 파일, PWA build 결과물 저장소)
+│   ├── storage/            # 정적 파일을 서빙 디렉토리 (업로드 파일, PWA build 결과물 저장소), 주의: 운영환경은 경로 다름 
 │   ├── app.js              # API 엔트리 포인트
 │   └── .env                # 환경 변수 설정 파일
 └── READEME.md
@@ -52,8 +52,8 @@ meerkatgram/
 ### client
 ````
 npm create vite@latest .
-npm i dayjs
-npm install -D 
+npm i dayjs react-router-dom @reduxjs/toolkit react-redux axios
+npm install -D vite-plugin-pwa
 ````
 
 ### server

@@ -8,7 +8,7 @@ import { DataTypes } from 'sequelize';
 
 const attributes = {
   id: {
-      field: 'id',
+    field: 'id',
     type: DataTypes.BIGINT.UNSIGNED,
     primaryKey: true,
     allowNull: false,
@@ -16,42 +16,42 @@ const attributes = {
     comment: '게시글 ID',
   },
   userId: {
-      field: 'user_id',
+    field: 'user_id',
     type: DataTypes.BIGINT.UNSIGNED,
     allowNull: false,
     comment: '유저 ID',
   },
   title: {
-      field: 'title',
+    field: 'title',
     type: DataTypes.STRING(200),
     allowNull: false,
     comment: '제목',
   },
   content: {
-      field: 'content',
+    field: 'content',
     type: DataTypes.STRING(2000),
     allowNull: false,
     comment: '본문',
   },
   image: {
-      field: 'image',
+    field: 'image',
     type: DataTypes.STRING(100),
     comment: '업로드 이미지 경로',
   },
   createdAt: {
-      field: 'created_at',
-      type: DataTypes.DATE,
-      allowNull: true
+    field: 'created_at',
+    type: DataTypes.DATE,
+    allowNull: true
   },
   updatedAt: {
-      field: 'updated_at',
-      type: DataTypes.DATE,
-      allowNull: true
+    field: 'updated_at',
+    type: DataTypes.DATE,
+    allowNull: true
   },
   deletedAt: {
-      field: 'deleted_at',
-      type: DataTypes.DATE,
-      allowNull: true
+    field: 'deleted_at',
+    type: DataTypes.DATE,
+    allowNull: true
   }
 };
 

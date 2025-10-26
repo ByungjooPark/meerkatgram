@@ -26,8 +26,12 @@ async function storeProfile(request, response, next) {
     if(!request.file) {
       throw myError('파일 없음', BAD_FILE_ERROR);
     }
-    console.log(request.file);
-    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'storeProfile'));
+
+    const result = {
+      path: `${process.env.APP_URL}${process.env.STORAGE_USER_PROFILE_PATH}/${request.file.filename}`
+    }
+
+    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
   } catch(e) {
     next(e);
   }
@@ -46,8 +50,12 @@ async function storePosts(request, response, next) {
     if(!request.file) {
       throw myError('파일 없음', BAD_FILE_ERROR);
     }
-    console.log(request.file);
-    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'storePosts'));
+
+    const result = {
+      path: `${process.env.APP_URL}${process.env.STORAGE_POST_IMAGE_PATH}/${request.file.filename}`
+    }
+
+    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
   } catch(e) {
     next(e);
   }

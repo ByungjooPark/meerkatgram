@@ -4,8 +4,11 @@
  * 251019 v1.0 meerkat
  */
 
+import fs from 'fs';
+import path from 'path';
 import { body } from 'express-validator';
-import Role from '../../../../middlewares/auth/configs/roleEnum.js'
+import Role from '../../auth/configs/roleEnum.js'
+import { pathUtil } from '../../../utils/pathUtil.js';
 
 export const email = body('email')
   .notEmpty()
@@ -33,3 +36,29 @@ export const role = body('role')
   .bail()
   .custom(val => val in Role)
   .withMessage('유효한 권한이 아닙니다.');
+
+export const profile = body('profile')
+  .notEmpty()
+  .withMessage('프로필은 필수 항목입니다.')
+  .bail()
+  .custom(val => {
+    
+    if(!val.startsWith(`${process.env.APP_URL}${process.env.STORAGE_USER_PROFILE_PATH}`)) {
+      return false;
+    }
+
+    return true;
+  })
+  .withMessage('허용하지 않는 프로필 경로입니다.')
+  .bail()
+  .custom(val => {
+    const splitPath = val.split('/');
+    const fullPath = path.join(pathUtil.getStorageProfileDirPath(), splitPath[splitPath.length - 1]);
+
+    if(!fs.existsSync(fullPath)) {
+      return false;
+    }
+
+    return true;
+  })
+  .withMessage('존재하지 않는 프로필 경로입니다.');

@@ -28,7 +28,7 @@ async function registration(body) {
       nick: body.nick,
       provider: Provider.NONE,
       role: Role[body.role],
-      profile: '/base.png',
+      profile: body.profile,
     }
   
     const result = await userRepository.store(t, data);

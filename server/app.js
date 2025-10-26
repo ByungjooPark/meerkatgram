@@ -6,6 +6,8 @@
 
 import express from 'express'; // express 모듈을 가져오기
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import path from 'path';
 import './configs/envConfig.js';
 import errorHandler from './app/errors/errorHandler.js';
 import authRouter from './routes/authRouter.js';
@@ -16,12 +18,15 @@ import postRouter from './routes/postRouter.js';
 import fileRouter from './routes/fileRouter.js';
 import morganLogger from './app/middlewares/Loggers/morganLogger.js';
 import { pathUtil } from './app/utils/pathUtil.js';
+import commentRouter from './routes/commentRouter.js';
+import { corsConfig } from './configs/corsConfig.js';
 
-const buildPath = pathUtil.getAppDirPath(process.env.STORAGE_DIST_PATH);
-const userProfilesPath = pathUtil.getStorageProfileDirPath(process.env.STORAGE_USER_PROFILE_PATH);
-const postsImagePath = pathUtil.getStoragePostDirPath(process.env.STORAGE_POST_IMAGE_PATH);
+const buildPath = pathUtil.getAppDirPath();
+const userProfilesPath = pathUtil.getStorageProfileDirPath();
+const postsImagePath = pathUtil.getStoragePostDirPath();
 
 const app = express(); // Express 애플리케이션 인스턴스를 생성
+app.use(cors(corsConfig));
 app.use(express.json()); // JSON 요청 파싱 처리
 app.use(cookieParser()); // Cookie파서 등록
 app.use(morganLogger);
@@ -41,6 +46,7 @@ app.use(authMiddleware.verifyAuth);
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
+app.use('/api/comments', commentRouter);
 app.use('/api/file', fileRouter);
 
 // 없는 API는 404 반환
@@ -52,7 +58,7 @@ app.all(/^\/api\/.*/, (request, response) => {
 
 // images 제외 요청 뷰 반환
 app.get(/^(?!\/images).*/, (request, response) => {
-    response.sendFile(join(buildPath, 'index.html'));
+    response.sendFile(path.join(buildPath, 'index.html'));
 });
 
 // Error Handler

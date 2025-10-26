@@ -86,12 +86,24 @@ Object.freeze(INVALID_TOKEN_ERROR);
  * @type {{[key: string]: ResponseCodeConfig}}
  */
 const CONFLICT_ERROR = {
-  code: 'E05',
+  code: 'E07',
   msg: 'Conflict Error',
   info: '이미 가입 된 회원입니다.',
   status: 409
 };
 Object.freeze(CONFLICT_ERROR);
+
+/**
+ * 권한 부족 에러 코드 설정
+ * @type {{[key: string]: ResponseCodeConfig}}
+ */
+const UNMATCHING_USER_ERROR = {
+  code: 'E08',
+  msg: 'Unmatching User Error',
+  info: '로그인한 유저로는 수행할 수 없는 작업입니다.',
+  status: 403
+};
+Object.freeze(UNMATCHING_USER_ERROR);
 
 /**
  * 전역 응답 코드 설정
@@ -166,4 +178,5 @@ export {
   UNAUTHORIZED_ERROR,
   EXPIRED_TOKEN_ERROR,
   BAD_FILE_ERROR,
+  UNMATCHING_USER_ERROR,
 };

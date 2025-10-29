@@ -12,7 +12,7 @@ export const loginThunk = createAsyncThunk(
   
       return response.data;
     } catch(error) {
-      throw thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response);
     }
   }
 );

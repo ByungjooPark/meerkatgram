@@ -52,7 +52,7 @@ meerkatgram/
 ### client
 ````
 npm create vite@latest .
-npm i dayjs react-router-dom @reduxjs/toolkit react-redux axios
+npm i dayjs react-router-dom @reduxjs/toolkit react-redux axios jwt-decode
 npm install -D vite-plugin-pwa
 ````
 

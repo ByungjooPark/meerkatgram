@@ -3,14 +3,20 @@ import App from "../components/App.jsx";
 import Login from "../components/auth/Login.jsx";
 import PostIndex from "../components/posts/PostIndex.jsx";
 import AuthRouter from "./AuthRouter.jsx";
+import IsNotLoginPass from "./isNotLoginPass.jsx";
 
 const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       {
-        path: '/',
-        element: <Login />
+        element: <IsNotLoginPass />,
+        children: [
+          {
+            path: '/',
+            element: <Login />
+          }
+        ],
       },
       {
         // 로그인 필요 기능

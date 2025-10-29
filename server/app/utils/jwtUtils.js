@@ -29,7 +29,7 @@ function generateToken(payload, ttl) {
     const options = {
         algorithm: process.env.JWT_ALGORITHM // 알고리즘 방식 설정
         ,noTimestamp: false // payload.iat 셋 (토큰 발급 시간)
-        ,expiresIn: ttl // payload.exp 셋 (토큰 만료 시간)
+        ,expiresIn: ttl // payload.exp 셋 (토큰 만료 시간) 초단위
         ,issuer: process.env.JWT_ISSUER // payload.iss 셋 (토큰 발급자)
     }
     

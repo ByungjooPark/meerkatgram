@@ -1,9 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import dayjs from 'dayjs';
+import { localstorageUtil } from "../utils/localstorageUtil.js";
 
-function AuthRouter() {
-  const isLogin = localStorage.getItem('accessToken') ? true : false;
+function IsLogind() {
+  const isLogin = localstorageUtil.getAccessToken() ? true : false;
+  
   try {
     const decoded = jwtDecode(localStorage.getItem('accessToken'));
     const exp = dayjs.unix(decoded.exp).format('YYYY-MM-DD HH:mm:ss')
@@ -12,13 +14,12 @@ function AuthRouter() {
   } catch(error) {
     console.log(error);
   }
-  return (
-    <>
-      {
-        isLogin ? <Outlet /> : <Navigate to='/' />
-      }
-    </>
-  )
+  
+  if(isLogin) {
+    return <Navigate to='/posts' replace />;
+  }
+
+  return <Outlet />;
 }
 
-export default AuthRouter;
+export default IsLogind;

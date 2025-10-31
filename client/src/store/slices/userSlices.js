@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Redux Toolkit의 createSlice 함수 임포트
 import { loginThunk } from "../thunks/authThunk.js";
+import { localstorageUtil } from "../../utils/localstorageUtil.js";
 
 
 const user = createSlice({
@@ -13,12 +14,10 @@ const user = createSlice({
   extraReducers: builder => {
     builder
       .addCase(loginThunk.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.userInfo = action.payload.data.user;
-        localStorage.setItem('accessToken', action.payload.data.accessToken);
+        localstorageUtil.setAccessToken(action.payload.data.accessToken);
       })
       .addCase(loginThunk.rejected, (state, action) => {
-        console.log(action);
         alert(action.payload.data.message);
       });
   }

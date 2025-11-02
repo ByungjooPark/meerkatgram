@@ -9,6 +9,10 @@ import { myError } from '../errors/custom/myError.js';
 import db from '../models/index.js';
 import { postRepository } from "../repositories/postRepository.js";
 
+async function getPostsPagination(data) {
+  return await postRepository.pagination(null, data);
+}
+
 async function createPost(data) {
   return await postRepository.store(null, data);
 }
@@ -35,6 +39,7 @@ async function update(data) {
 }
 
 export const postService = {
+  getPostsPagination,
   createPost,
   show,
   update,

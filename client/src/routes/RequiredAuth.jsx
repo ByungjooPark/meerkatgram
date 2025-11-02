@@ -1,14 +1,16 @@
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { localstorageUtil } from "../utils/localstorageUtil.js";
 
 function RequiredAuth() {
-  const isLogin = localstorageUtil.getAccessToken() ? true : false;
-  
-  if(!isLogin) {
-    return <Navigate to='/' replace />;
-  }
+  const isLogin = useSelector(state => state.auth.isLogin);
 
-  return <Outlet />;
+  return (
+    <>
+      {
+        isLogin ? <Outlet /> : <Navigate to='/' replace />
+      }
+    </>
+  )
 }
 
 export default RequiredAuth;

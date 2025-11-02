@@ -16,3 +16,17 @@ export const loginThunk = createAsyncThunk(
     }
   }
 );
+
+export const reissueThunk = createAsyncThunk(
+  'auth/reissue',
+  async (_, thunkAPI) => {
+    try {
+      const url = '/auth/reissue';
+      const response = await axios.post(url);
+  
+      return response;
+    } catch(error) {
+      return thunkAPI.rejectWithValue(error.response);
+    }
+  }
+);

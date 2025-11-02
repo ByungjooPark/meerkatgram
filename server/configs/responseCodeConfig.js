@@ -29,7 +29,7 @@ const NOT_REGISTERED_ERROR = {
   code: 'E01',
   msg: 'Not Registered Error',
   info: '아이디나 비밀번호가 틀렸습니다.',
-  status: 401 // Unauthorized
+  status: 400
 };
 Object.freeze(NOT_REGISTERED_ERROR);
 
@@ -65,7 +65,7 @@ const EXPIRED_TOKEN_ERROR = {
   code: 'E05',
   msg: 'Invalid Token Error',
   info: '만료된 토큰입니다.',
-  status: 403
+  status: 401
 };
 Object.freeze(EXPIRED_TOKEN_ERROR);
 
@@ -77,7 +77,7 @@ const INVALID_TOKEN_ERROR = {
   code: 'E06',
   msg: 'Invalid Token Error',
   info: '유효한 토큰이 아닙니다.',
-  status: 403
+  status: 401
 };
 Object.freeze(INVALID_TOKEN_ERROR);
 
@@ -104,6 +104,18 @@ const UNMATCHING_USER_ERROR = {
   status: 403
 };
 Object.freeze(UNMATCHING_USER_ERROR);
+
+/**
+ * 리이슈 에러 코드 설정
+ * @type {{[key: string]: ResponseCodeConfig}}
+ */
+const REISSUE_ERROR = {
+  code: 'E09',
+  msg: 'Reissue Error',
+  info: '재발급 불가능합니다.',
+  status: 401
+};
+Object.freeze(REISSUE_ERROR);
 
 /**
  * 전역 응답 코드 설정
@@ -179,4 +191,5 @@ export {
   EXPIRED_TOKEN_ERROR,
   BAD_FILE_ERROR,
   UNMATCHING_USER_ERROR,
+  REISSUE_ERROR,
 };

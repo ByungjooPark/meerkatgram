@@ -26,8 +26,8 @@ export const postController = {
  */
 async function index(request, response, next) {
   try {
-    
-    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, 'post.index'));
+    const result = await postService.getPostsPagination({limit: 10, offset: 0});
+    return response.status(SUCCESS.status).send(createBaseResponse(SUCCESS, result));
   } catch(e) {
     next(e);
   }

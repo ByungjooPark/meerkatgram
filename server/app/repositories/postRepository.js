@@ -7,6 +7,15 @@
 import db from '../models/index.js';
 const { sequelize, Post, User } = db;
 
+async function pagination(t = null, data) {
+  return await Post.findAll(
+    data,
+    {
+      transaction: t,
+    }
+  );
+}
+
 async function show(t = null, id) {
   return await Post.findByPk(
     id,
@@ -34,6 +43,7 @@ async function update(t = null, post) {
 }
 
 export const postRepository = {
+  pagination,
   store,
   show,
   update,

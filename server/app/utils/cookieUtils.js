@@ -58,7 +58,9 @@ function setCookie(response, cookieName, cookieValue, ttl, httpOnlyFlg = true, s
     {
       expires: dayjs().add(ttl, 'millisecond').toDate(),
       httpOnly: httpOnlyFlg,
-      secure: secureFlg
+      // secure: process.env.APP_MODE !== 'dev',
+      secure: secureFlg,
+      sameSite: 'None',
     }
   );
 }

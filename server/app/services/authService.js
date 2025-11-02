@@ -5,7 +5,7 @@
  */
 
 import bcrypt from 'bcrypt';
-import { INVALID_TOKEN_ERROR, NOT_REGISTERED_ERROR, UNAUTHORIZED_ERROR } from "../../configs/responseCodeConfig.js";
+import { NOT_REGISTERED_ERROR, REISSUE_ERROR } from "../../configs/responseCodeConfig.js";
 import { userRepository } from "../repositories/userRepositories.js"
 import { myError } from '../errors/custom/myError.js';
 import { jwtUtil } from '../utils/jwtUtils.js';
@@ -47,7 +47,7 @@ async function login(body) {
 async function reissue(token) {
   // 리프래시 토큰 존재 여부 채크
   if(!token) {
-    throw myError('리프래시 토큰 없음', UNAUTHORIZED_ERROR)
+    throw myError('리프래시 토큰 없음', REISSUE_ERROR)
   }
 
   // 유저 id 획득
@@ -60,7 +60,7 @@ async function reissue(token) {
 
     // 리프래시 토큰 확인
     if(token !== user.refreshToken) {
-      throw myError('리프래시 토큰 다름', INVALID_TOKEN_ERROR)
+      throw myError('리프래시 토큰 다름', REISSUE_ERROR)
     }
   
     // JWT 생성

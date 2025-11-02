@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, redirect, RouterProvider } from "react-router-dom";
 import App from "../components/App.jsx";
 import Login from "../components/auth/Login.jsx";
 import PostIndex from "../components/posts/PostIndex.jsx";
@@ -10,10 +10,16 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        path: '/',
+        loader: () => {
+          return redirect('/login');
+        }
+      },
+      {
         element: <IsLogind />,
         children: [
           {
-            path: '/',
+            path: '/login',
             element: <Login />
           }
         ],

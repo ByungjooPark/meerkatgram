@@ -1,13 +1,14 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function IsLogind() {
+  const location = useLocation();
   const isLogin = useSelector(state => state.auth.isLogin);
-  
+
   return (
     <>
       {
-        !isLogin ? <Outlet /> : <Navigate to='/' replace />
+        isLogin ? <Navigate to={location.pathname} replace /> : <Outlet />
       }
     </>
   )

@@ -7,7 +7,7 @@ function RequiredAuth() {
   return (
     <>
       {
-        isLogin ? <Outlet /> : <Navigate to='/' replace />
+        isLogin ? <Outlet /> : <Navigate to='/login' replace />
       }
     </>
   )

@@ -1,7 +1,7 @@
 import axiosOrigin from 'axios';
 import { localstorageUtil } from '../utils/localstorageUtil.js';
 import { reissueThunk } from '../store/thunks/authThunk.js';
-import { setLogin, setLogout } from '../store/slices/authSlices.js';
+import { setLogout } from '../store/slices/authSlices.js';
 
 let store = null;
 
@@ -43,7 +43,7 @@ axios.interceptors.response.use(
         const response = await store.dispatch(reissueThunk()).unwrap();
 
         if(response?.status === 200) {
-          store.dispatch(setLogin(response.data));
+          // store.dispatch(setLogin(response));
           prevRequest.Authorization = `Bearer ${response.data.data.accessToken}`;
           return axios(prevRequest);
         } else {

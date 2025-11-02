@@ -24,7 +24,10 @@ export const reissueThunk = createAsyncThunk(
       const url = '/auth/reissue';
       const response = await axios.post(url);
   
-      return response;
+      return {
+        status: response.status,
+        data: response.data
+      };
     } catch(error) {
       return thunkAPI.rejectWithValue(error.response);
     }

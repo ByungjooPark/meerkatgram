@@ -63,7 +63,7 @@ async function store(request, response, next) {
       userId: request.user.userId,
       postId: request.body.postId,
       content: request.body.content.trim(),
-      commentId: request.body.commentId ? parseInt(request.body.commentId.trim()) : 0,
+      commentId: request.body.commentId ? request.body.commentId : 0,
     }
 
     const result = await commentService.store(data);

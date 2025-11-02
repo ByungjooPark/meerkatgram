@@ -25,6 +25,7 @@
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.3",
     "swagger-ui-express": "^5.0.1",
+    "web-push": "^3.6.7",
     "winston": "^3.18.3",
     "yaml": "^2.8.1"
   },
